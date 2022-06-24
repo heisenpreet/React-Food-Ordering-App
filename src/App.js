@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import GlobalStyles from "./UIComponents/GlobalStyles";
+import { Suspense } from "react";
+import LoadingSpinner from "./UIComponents/minorComponents/LoadingSpinner";
+import ActionBar from "./UIComponents/majorComponents/ActionBar";
+import { useContext } from "react";
+import Theme from "./Store/themeContext";
+import Header from "./Components/Layout/Header";
+import Meals from "./Components/Meals/Meals";
+import CartProvider from "./Store/CardProvider";
 
 function App() {
+  const theme = useContext(Theme);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Suspense fallback={<LoadingSpinner />}>
+      <GlobalStyles />
+      <div data-theme={theme.theme.themeName}>
+        <ActionBar />
+        <CartProvider>
+          <Header />
+          <main>
+            <Meals />
+          </main>
+        </CartProvider>
+      </div>
+    </Suspense>
   );
 }
 
