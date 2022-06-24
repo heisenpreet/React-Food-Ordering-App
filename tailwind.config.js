@@ -23,10 +23,28 @@ module.exports = {
             transform: " rotate(-360deg)",
           },
         },
+        bump: {
+          "0%": {
+            transform: "scale(1)",
+          },
+          "10%": {
+            transform: "scale(0.9)",
+          },
+          "30%": {
+            transform: "scale(1.1)",
+          },
+          "5%": {
+            transform: "scale(1.15)",
+          },
+          "100%": {
+            transform: "scale(1)",
+          },
+        },
       },
 
       animation: {
         topdownnotification: "popover 1s ease-in-out ",
+        bumpit: "bump 300ms ease-in-out",
         spinner: " skcubemove 1.8s infinite ease-in-out",
       },
     },

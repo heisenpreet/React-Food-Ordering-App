@@ -1,15 +1,33 @@
 import CartContext from "../../Store/card-context";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 
 const Navbar = (props) => {
   const cartCtx = useContext(CartContext);
+  const [animateBtn, setanimateBtn] = useState(false);
 
-  const numberOfCartItems = cartCtx.items.reduce((curNumber, item) => {
+  const { items } = cartCtx;
+  const numberOfCartItems = items.reduce((curNumber, item) => {
     return curNumber + item.amount;
   }, 0);
 
+  const btnClasses = `btn btn-ghost btn-circle ${
+    animateBtn ? "animate-bumpit" : ""
+  }`;
+
+  useEffect(() => {
+    if (items === 0) return;
+
+    setanimateBtn(true);
+    const btnAnimatetimer = setTimeout(() => {
+      setanimateBtn(false);
+    }, 300);
+    return () => {
+      clearTimeout(btnAnimatetimer);
+    };
+  }, [items]);
+
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-base-100 fixed top-0 z-50">
       <div className="flex-1">
         <a className="btn btn-ghost normal-case text-xl">
           React Food Ordering App
@@ -17,7 +35,7 @@ const Navbar = (props) => {
       </div>
       <div className="flex-none">
         <div className="dropdown dropdown-end">
-          <label tabIndex="0" className="btn btn-ghost btn-circle">
+          <label tabIndex="0" className={btnClasses}>
             <div className="indicator">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

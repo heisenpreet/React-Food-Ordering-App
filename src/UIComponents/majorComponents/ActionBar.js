@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const StyledActionBar = styled.aside`
   & {
-    ${tw`fixed top-36 right-10 flex flex-col gap-y-5 justify-center items-center z-50 `}
+    ${tw`fixed bottom-24 right-10 flex flex-col gap-y-5 justify-center items-center z-50 `}
   }
 `;
 
