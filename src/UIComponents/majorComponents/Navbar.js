@@ -30,7 +30,7 @@ const Navbar = (props) => {
     <div className="navbar bg-base-100 fixed top-0 z-50">
       <div className="flex-1">
         <a className="btn btn-ghost normal-case text-xl">
-          React Food Ordering App
+          Harry's Food Ordering App
         </a>
       </div>
       <div className="flex-none">

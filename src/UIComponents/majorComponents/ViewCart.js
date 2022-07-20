@@ -3,12 +3,11 @@ import { useContext, useState, useRef, useEffect } from "react";
 import CartContext from "../../Store/card-context";
 import React from "react";
 import CrossBtn from "../minorComponents/CrossBtn";
-import AddBtn from "../minorComponents/AddBtn";
+import CheckoutAddressForm from "./CheckoutAddressForm";
 const ViewCart = (props) => {
   const CartCtx = useContext(CartContext);
   const [orderPlaced, setOrderPlaced] = useState(false);
-  const reff = useRef({});
-  reff.current = orderPlaced;
+  const [orderDetails, setorderDetails] = useState(false);
 
   useEffect(() => {
     if (localStorage.getItem("ORDER") === "1") {
@@ -17,8 +16,24 @@ const ViewCart = (props) => {
   }, []);
 
   const orderPlaceHandler = () => {
+    setorderDetails(true);
+  };
+
+  const onSubmitHandler = (Cname) => {
+    // e.preventDefault();
+    console.log(Cname);
+    fetch(
+      "https://httppractice-86b7f-default-rtdb.firebaseio.com/orders.json",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          user: Cname,
+          items: CartCtx.items,
+        }),
+      }
+    );
     setOrderPlaced(true);
-    localStorage.setItem("ORDER", "1");
+    setorderDetails(false);
   };
 
   const ListItems = React.memo(
@@ -58,12 +73,12 @@ const ViewCart = (props) => {
             ${(CartCtx.totalAmount - CartCtx.totalAmount / 10).toFixed(2)}
           </div>
           <div className="stat-actions">
-            {!reff.current && (
+            {!orderPlaced && (
               <button onClick={orderPlaceHandler} className="btn btn-sm">
                 Place Order
               </button>
             )}
-            {reff.current && (
+            {orderPlaced && (
               <button className="btn btn-sm bg-success text-primary-content">
                 Order Placed
               </button>
@@ -103,6 +118,12 @@ const ViewCart = (props) => {
           </tbody>
         </table>
         <OrderCard oncloseOverlay={props.oncloseOverlay} />
+        {orderDetails && (
+          <>
+            <div className="divider"></div>
+            <CheckoutAddressForm onSubmitHandler={onSubmitHandler} />
+          </>
+        )}
       </div>
     </Modal>
   );

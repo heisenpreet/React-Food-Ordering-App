@@ -53,7 +53,7 @@ module.exports = {
 
   daisyui: {
     styled: true,
-    themes: ["corporate", "black"],
+    themes: ["corporate", "black", "retro"],
     base: true,
     utils: true,
     logs: true,
